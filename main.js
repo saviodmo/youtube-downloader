@@ -72,8 +72,8 @@ function findFfmpegDir() {
 // ---------------------------------------------------------------------------
 
 const THEME_BACKGROUND = {
-  dark: '#08080d',
-  light: '#f4f4f9',
+  dark: '#1e1f22',
+  light: '#f7f8fa',
 }
 
 function readConfig() {
