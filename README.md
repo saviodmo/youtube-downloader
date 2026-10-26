@@ -70,8 +70,8 @@ Para atualizar o FFmpeg depois: `npm run fetch-ffmpeg -- --force`.
 
 O resultado fica em `dist/`:
 
-- `YouTube Downloader Setup 1.0.0.exe` — instalador (cria atalho na área de trabalho)
-- `YouTube Downloader 1.0.0.exe` — versão portátil, roda sem instalar
+- `YouTube Downloader Setup <versão>.exe` — instalador (cria atalho na área de trabalho)
+- `YouTube Downloader <versão>.exe` — versão portátil, roda sem instalar
 
 O `electron-builder` empacota a pasta `bin/` (com `yt-dlp.exe`, `ffmpeg.exe`
 e os arquivos de licença do FFmpeg) junto do app. O `ffprobe` não é incluído:
@@ -99,8 +99,11 @@ que compila no Windows, gera os dois executáveis e publica uma release no GitHu
 2. Envie o commit e a tag:
 
    ```bash
-   git push --follow-tags
+   git push origin main --tags
    ```
+
+   > O `npm version` cria uma tag leve, que o `git push --follow-tags` **não**
+   > envia. Por isso usamos `--tags` (ou `git push origin v1.0.1`).
 
 3. O GitHub Actions roda sozinho, compila e cria a release `v1.0.1` com:
    - instalador e versão portátil;
