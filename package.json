@@ -11,7 +11,7 @@
     "setup": "node scripts/setup.js",
     "fetch-ffmpeg": "node scripts/fetch-ffmpeg.js",
     "prebuild": "node scripts/fetch-ffmpeg.js",
-    "build": "electron-builder --win"
+    "build": "electron-builder --win --publish never"
   },
   "devDependencies": {
     "electron": "^45.0.0",
