@@ -1,0 +1,48 @@
+{
+  "name": "youtube-downloader",
+  "productName": "YouTube Downloader",
+  "version": "1.0.0",
+  "description": "Baixe videos do YouTube informando apenas o link.",
+  "main": "main.js",
+  "author": "Savio Duarte",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "setup": "node scripts/setup.js",
+    "fetch-ffmpeg": "node scripts/fetch-ffmpeg.js",
+    "prebuild": "node scripts/fetch-ffmpeg.js",
+    "build": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.savio.youtubedownloader",
+    "productName": "YouTube Downloader",
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "build/icon.ico"
+    ],
+    "extraResources": [
+      {
+        "from": "bin",
+        "to": "bin"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  }
+}

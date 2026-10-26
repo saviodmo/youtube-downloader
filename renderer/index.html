@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <title>YouTube Downloader</title>
+    <script src="theme-boot.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <!-- Barra de título personalizada -->
+    <header class="titlebar">
+      <div class="brand">
+        <span class="brand-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8Z"
+              fill="currentColor"
+              opacity=".95"
+            />
+            <path d="M10 15.2V8.8L15.4 12 10 15.2Z" fill="#0b0b12" />
+          </svg>
+        </span>
+        <span class="brand-name">YouTube Downloader</span>
+      </div>
+
+      <div class="win-controls">
+        <button id="btnTheme" class="win-btn theme-btn" type="button" title="Mudar para tema claro" aria-label="Alternar tema">
+          <svg id="themeIconSun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.1" stroke="currentColor" stroke-width="1.6" fill="none" />
+            <path
+              d="M12 2.9v2.3M12 18.8v2.3M2.9 12h2.3M18.8 12h2.3M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+            />
+          </svg>
+          <svg id="themeIconMoon" class="hidden" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M20.4 14.7A8.5 8.5 0 0 1 9.3 3.6a8.7 8.7 0 1 0 11.1 11.1Z"
+              stroke="currentColor"
+              stroke-width="1.6"
+              fill="none"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <button id="btnMin" class="win-btn" title="Minimizar" aria-label="Minimizar">
+          <svg viewBox="0 0 12 12"><path d="M2 6h8" stroke="currentColor" stroke-width="1.2" /></svg>
+        </button>
+        <button id="btnMax" class="win-btn" title="Maximizar" aria-label="Maximizar">
+          <svg viewBox="0 0 12 12">
+            <rect x="2.6" y="2.6" width="6.8" height="6.8" rx="1" stroke="currentColor" stroke-width="1.2" fill="none" />
+          </svg>
+        </button>
+        <button id="btnClose" class="win-btn danger" title="Fechar" aria-label="Fechar">
+          <svg viewBox="0 0 12 12">
+            <path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.2" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="intro">
+        <h1>Baixe vídeos do YouTube</h1>
+        <p>Cole o link, escolha a pasta e acompanhe o progresso em tempo real.</p>
+      </div>
+
+      <!-- Link -->
+      <section class="field">
+        <label class="field-label" for="url">Link do vídeo</label>
+        <div class="url-wrap">
+          <svg class="url-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M10.6 13.4a1 1 0 0 1 0-1.4l1.4-1.4a3 3 0 0 1 4.2 4.2l-2.1 2.1a3 3 0 0 1-4.2 0 1 1 0 0 1 1.4-1.4 1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0-1.4-1.4L12 13.4a1 1 0 0 1-1.4 0Z"
+              fill="currentColor"
+            />
+            <path
+              d="M13.4 10.6a1 1 0 0 1 0 1.4L12 13.4A3 3 0 0 1 7.8 9.2l2.1-2.1a3 3 0 0 1 4.2 0 1 1 0 0 1-1.4 1.4 1 1 0 0 0-1.4 0L9.2 10.6a1 1 0 0 0 1.4 1.4l1.4-1.4a1 1 0 0 1 1.4 0Z"
+              fill="currentColor"
+              opacity=".65"
+            />
+          </svg>
+          <input
+            id="url"
+            type="text"
+            spellcheck="false"
+            autocomplete="off"
+            placeholder="https://www.youtube.com/watch?v=..."
+          />
+          <button id="btnPaste" class="mini-btn" type="button">Colar</button>
+        </div>
+        <p id="hint" class="hint">Aceita links de vídeos, Shorts e youtu.be.</p>
+      </section>
+
+      <!-- Prévia do vídeo -->
+      <section id="preview" class="preview hidden">
+        <div class="thumb">
+          <div id="thumbSkeleton" class="thumb-skeleton"></div>
+          <img id="thumbImg" alt="Miniatura do vídeo" class="hidden" />
+          <span id="durationBadge" class="duration-badge hidden"></span>
+        </div>
+        <div class="preview-body">
+          <h2 id="videoTitle" class="video-title">—</h2>
+          <div id="videoChannel" class="video-channel">—</div>
+          <div class="chips">
+            <span id="chipQuality" class="chip">—</span>
+            <span id="chipStatus" class="chip chip-ok">Pronto para baixar</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Opções -->
+      <section class="panel">
+        <div class="panel-row">
+          <div class="grow">
+            <div class="field-label">Salvar em</div>
+            <div class="folder-box">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M3 7.5A2.5 2.5 0 0 1 5.5 5h3.4c.6 0 1.2.25 1.65.68l1.06 1.02c.2.2.48.3.76.3h6.13A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z"
+                  fill="currentColor"
+                  opacity=".8"
+                />
+              </svg>
+              <span id="folderPath" class="folder-path">—</span>
+            </div>
+          </div>
+          <div class="panel-actions">
+            <button id="btnChoose" class="btn ghost" type="button">Escolher pasta</button>
+            <button id="btnOpenFolder" class="btn icon-only" type="button" title="Abrir pasta">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M14 4h6v6M20 4l-8.5 8.5M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field-label">O que você quer baixar</div>
+        <div id="mode" class="segmented cols-2" role="group" aria-label="Tipo de download">
+          <button class="seg mode-seg" data-mode="video" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2.6" y="5.4" width="18.8" height="13.2" rx="3" stroke="currentColor" stroke-width="1.6" fill="none" />
+              <path d="M10.3 9.4v5.2l4.4-2.6-4.4-2.6Z" fill="currentColor" />
+            </svg>
+            Vídeo (MP4)
+          </button>
+          <button class="seg mode-seg" data-mode="audio" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9.4 17.6V7.1l8.6-1.6v10.1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round" />
+              <circle cx="6.8" cy="17.8" r="2.5" stroke="currentColor" stroke-width="1.6" fill="none" />
+              <circle cx="15.4" cy="15.7" r="2.5" stroke="currentColor" stroke-width="1.6" fill="none" />
+            </svg>
+            Somente áudio
+          </button>
+        </div>
+
+        <div id="videoOptions" class="options-block">
+          <div class="field-label">Qualidade do vídeo</div>
+          <div id="videoQuality" class="segmented" role="group" aria-label="Qualidade do vídeo">
+            <button class="seg" data-value="best" type="button">Melhor</button>
+            <button class="seg" data-value="1080" type="button">1080p</button>
+            <button class="seg" data-value="720" type="button">720p</button>
+            <button class="seg" data-value="480" type="button">480p</button>
+            <button class="seg" data-value="360" type="button">360p</button>
+          </div>
+        </div>
+
+        <div id="audioOptions" class="options-block hidden">
+          <div class="field-label">Formato do áudio</div>
+          <div id="audioFormat" class="segmented cols-4" role="group" aria-label="Formato do áudio">
+            <button class="seg" data-value="mp3" type="button">MP3</button>
+            <button class="seg" data-value="wav" type="button">WAV</button>
+            <button class="seg" data-value="m4a" type="button">M4A</button>
+            <button class="seg" data-value="flac" type="button">FLAC</button>
+          </div>
+
+          <div id="audioQualityBlock">
+            <div class="field-label mt">Qualidade do áudio</div>
+            <div id="audioQuality" class="segmented cols-4" role="group" aria-label="Qualidade do áudio">
+              <button class="seg" data-value="320" type="button">320 kbps</button>
+              <button class="seg" data-value="256" type="button">256 kbps</button>
+              <button class="seg" data-value="192" type="button">192 kbps</button>
+              <button class="seg" data-value="128" type="button">128 kbps</button>
+            </div>
+          </div>
+
+          <p id="audioNote" class="note hidden">
+            WAV e FLAC são formatos sem perda: o arquivo fica bem maior, com a máxima qualidade que o vídeo oferece.
+            A qualidade em kbps não se aplica a eles.
+          </p>
+        </div>
+      </section>
+
+      <!-- Andamento -->
+      <section id="progressPanel" class="panel progress hidden">
+        <div class="progress-head">
+          <div>
+            <div class="percent">
+              <span id="pct">0</span><span class="percent-sign">%</span>
+            </div>
+            <div id="progressStatus" class="progress-status">Preparando…</div>
+            <div id="progressDetail" class="progress-detail"></div>
+          </div>
+          <div class="timer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12.5" r="8" stroke="currentColor" stroke-width="1.6" fill="none" opacity=".35" />
+              <path d="M12 8.5v4.2l2.8 1.7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" />
+            </svg>
+            <span id="elapsed">00:00</span>
+          </div>
+        </div>
+
+        <div class="bar">
+          <div id="barFill" class="bar-fill"></div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">Velocidade</span>
+            <span id="statSpeed" class="stat-value">—</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Tempo restante</span>
+            <span id="statEta" class="stat-value">—</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Baixado</span>
+            <span id="statDownloaded" class="stat-value">—</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Tamanho</span>
+            <span id="statTotal" class="stat-value">—</span>
+          </div>
+        </div>
+
+        <div class="progress-actions">
+          <button id="btnCancel" class="btn ghost danger-text" type="button">Cancelar download</button>
+        </div>
+      </section>
+
+      <!-- Concluído -->
+      <section id="resultPanel" class="panel result hidden">
+        <div class="result-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="result-body">
+          <div class="result-title">Download concluído</div>
+          <div id="resultFile" class="result-file">—</div>
+          <div id="resultMeta" class="result-meta">—</div>
+        </div>
+        <div class="result-actions">
+          <button id="btnShowFile" class="btn ghost" type="button">Abrir arquivo</button>
+          <button id="btnAgain" class="btn ghost" type="button">Novo download</button>
+        </div>
+      </section>
+
+      <button id="btnDownload" class="btn primary big" type="button" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 4v10m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M5 17.5v1A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5v-1" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" />
+        </svg>
+        <span id="btnDownloadLabel">Baixar vídeo</span>
+      </button>
+
+      <footer class="footer">
+        <div class="footer-left">
+          <span class="dot"></span>
+          <span id="engineInfo">Verificando motor…</span>
+        </div>
+        <div class="footer-right">
+          <button id="btnUpdateEngine" class="link-btn" type="button">Atualizar motor</button>
+          <span class="sep">•</span>
+          <span id="ffmpegInfo">FFmpeg</span>
+        </div>
+      </footer>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

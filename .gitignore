@@ -1,0 +1,11 @@
+node_modules/
+dist/
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Baixados por scripts/fetch-ffmpeg.js (não versionar: ~160 MB)
+bin/ffmpeg.exe
+bin/ffprobe.exe
+bin/FFmpeg-LICENSE.txt
+bin/FFMPEG-NOTICE.txt
